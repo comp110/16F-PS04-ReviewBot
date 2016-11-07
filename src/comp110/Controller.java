@@ -24,7 +24,7 @@ public class Controller {
   /*
    * The dispatch method gets called by the View every time a message is
    * received. It is responsible for dispatching a message to a Responder that
-   * can respond to the message. It then relays the response back to the View.
+   * can respond to the message. It then returns the response back to the View.
    */
   public String dispatch(String message) {
     Responder responder = this.findResponder(message);
