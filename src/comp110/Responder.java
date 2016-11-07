@@ -3,11 +3,10 @@ package comp110;
 public interface Responder {
 
   /*
-   * isTriggeredBy is used to ask a BotMode implementation if a particular
-   * message matches something it can respond to. If so, it will return true. If
-   * not, it will return false.
+   * The Controller uses this method to ask each Responder if it will respond to
+   * a particular message.
    */
-  public boolean isTriggeredBy(String message);
+  public boolean willRespondTo(String message);
 
   /*
    * The respondTo method is given a user's message and will return a response

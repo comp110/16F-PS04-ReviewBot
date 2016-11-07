@@ -3,7 +3,7 @@ package comp110.support;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
-import comp110.BotController;
+import comp110.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -27,7 +27,7 @@ import javafx.scene.layout.HBox;
  * The following is support code provided to you. You should not modify any of it until you
  * have submitted for full credit. After you have, if you're curious to tinker around, go for it!
  */
-public class BotView extends Application {
+public class View extends Application {
 
   /* GUI Instance Vars */
   private VBox _chatHistoryContent;
@@ -38,8 +38,8 @@ public class BotView extends Application {
   private Voice _voice;
 
   /* Static Variables (Static needed for JavaFX Launch Workaround Hack) */
-  private static BotController _controller;
-  private static String _greeting;
+  private static Controller _controller;
+  private static String _botName, _greeting;
 
   /* Constants */
   private static final double DEFAULT_WIDTH = 256.0;
@@ -47,10 +47,11 @@ public class BotView extends Application {
   private static final double MESSAGE_BOX_WIDTH = 256.0;
 
   /* Constructors */
-  public BotView() {
+  public View() {
   }
 
-  public BotView(String greeting, BotController controller) {
+  public View(String botName, String greeting, Controller controller) {
+    _botName = botName;
     _greeting = greeting;
     _controller = controller;
   }
@@ -89,18 +90,36 @@ public class BotView extends Application {
     String input = _messageBox.getText();
     _messageBox.clear();
     this.userSays(input);
-
-    String response = _controller.dispatch(input);
+    String sanitizedInput = this.sanitizeInput(input);
+    String response = _controller.dispatch(sanitizedInput);
     if (response != null) {
       this.botSays(response);
     }
+  }
+
+  /*
+   * This method cleans up a String message by converting it to lower case and
+   * removing special characters like commas, periods, quotes, and question
+   * marks.
+   * 
+   * Example:
+   * 
+   * message: Hi, I'm looking for help with "ADT". Can you help me?
+   * 
+   * returns: hi im looking for help with adt can you help me
+   */
+  public String sanitizeInput(String message) {
+    String result = message.toLowerCase(); // Convert the message to lowercase.
+    result = result.replaceAll("[,.'\"?]", ""); // Remove special characters.
+    result = result.trim(); // Remove leading and trailing spaces.
+    return result;
   }
 
   /* Helper methods for sending messages from either bot or user */
 
   private void botSays(String message) {
     this.speak(message);
-    this.addMessageToHistory("ReviewBot", message, false);
+    this.addMessageToHistory(_botName, message, false);
   }
 
   private void userSays(String message) {
