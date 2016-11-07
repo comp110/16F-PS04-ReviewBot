@@ -3,7 +3,7 @@ package comp110;
 public class DefaultResponder implements Responder {
 
   public boolean canHandle(String message) {
-    return false;
+    return true;
   }
 
   public String respondTo(String message) {
