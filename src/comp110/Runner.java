@@ -6,7 +6,7 @@ public class Runner {
 
   public static void main(String[] args) {
 
-    BotMode mode = new DefaultMode();
+    Responder mode = new DefaultMode();
     BotController controller = new BotController(mode);
 
     String greeting = "Hi, how can I help you review?";

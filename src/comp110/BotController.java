@@ -9,14 +9,12 @@ import java.util.List;
  */
 public class BotController {
 
-  private List<BotMode> _modes;
-  private BotMode _currentMode;
+  private List<Responder> _modes;
 
   /* The constructor initializes instance variables. */
-  public BotController(BotMode defaultMode) {
-    _modes = new ArrayList<BotMode>();
+  public BotController(Responder defaultMode) {
+    _modes = new ArrayList<Responder>();
     _modes.add(defaultMode);
-    _currentMode = null; // We begin without being in a mode.
   }
 
   /*
@@ -25,20 +23,8 @@ public class BotController {
    * keeping track of what mode the bot should be in.
    */
   public String dispatch(String message) {
-
-    message = this.cleanUpMessage(message);
-
-    if (_currentMode == null) {
-      _currentMode = this.findNextMode(message);
-    }
-
-    String response = _currentMode.respondTo(message);
-
-    if (_currentMode.isFinished()) {
-      _currentMode = null;
-    }
-
-    return response;
+    Responder responder = this.findNextMode(message);
+    return responder.respondTo(message);
   }
 
   /*
@@ -46,7 +32,7 @@ public class BotController {
    * by the message and return it starting from the last mode added to the list
    * and working back toward the 0th index.
    */
-  public BotMode findNextMode(String message) {
+  public Responder findNextMode(String message) {
     // TODO: FIX THIS LOGIC
     return _modes.get(_modes.size() - 1);
   }
@@ -54,26 +40,8 @@ public class BotController {
   /*
    * More modes can be added to the bot by calling addMode.
    */
-  public void addMode(BotMode mode) {
+  public void addMode(Responder mode) {
     _modes.add(mode);
-  }
-
-  /*
-   * This helper method cleans up a String message by converting it to lower
-   * case and removing special characters like commas, periods, quotes, and
-   * question marks.
-   * 
-   * Example:
-   * 
-   * message: Hi, I'm looking for help with "arrays". Can you help me?
-   * 
-   * returns: hi im looking for help with arrays can you help me
-   */
-  public String cleanUpMessage(String message) {
-    String result = message.toLowerCase(); // Convert the message to lowercase.
-    result = result.replaceAll("[,.'\"?]", ""); // Remove special characters.
-    result = result.trim(); // Remove leading and trailing spaces.
-    return result;
   }
 
 }

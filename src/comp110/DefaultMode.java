@@ -1,6 +1,6 @@
 package comp110;
 
-public class DefaultMode implements BotMode {
+public class DefaultMode implements Responder {
 
   public boolean isTriggeredBy(String message) {
     return true;

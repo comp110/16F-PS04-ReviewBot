@@ -1,6 +1,6 @@
 package comp110;
 
-public interface BotMode {
+public interface Responder {
 
   /*
    * isTriggeredBy is used to ask a BotMode implementation if a particular
@@ -14,12 +14,5 @@ public interface BotMode {
    * to that message which the bot will then say.
    */
   public String respondTo(String message);
-
-  /*
-   * When the mode is completed, this method will return true causing the
-   * Controller to "exit" the mode. Otherwise, if it returns true, the bot will
-   * remain in this given mode for the next interaction.
-   */
-  public boolean isFinished();
 
 }
