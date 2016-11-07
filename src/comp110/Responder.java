@@ -3,10 +3,10 @@ package comp110;
 public interface Responder {
 
   /*
-   * The Controller uses this method to ask each Responder if it will respond to
-   * a particular message.
+   * The Controller uses this method to ask a Responder if it knows how to
+   * respond to a given message.
    */
-  public boolean willRespondTo(String message);
+  public boolean canHandle(String message);
 
   /*
    * The respondTo method is given a user's message and will return a response

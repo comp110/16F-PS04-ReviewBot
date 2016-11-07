@@ -9,26 +9,35 @@ import java.util.List;
  */
 public class Controller {
 
+  // This instance variable holds all of the bot's Responder implementations.
   private List<Responder> _responders;
 
-  /* The constructor initializes instance variables. */
-  public Controller(Responder defaultMode) {
+  /*
+   * The constructor initializes the list of Responders to have the default
+   * responder *first* in the List at index 0.
+   */
+  public Controller(Responder defaultResponder) {
     _responders = new ArrayList<Responder>();
-    _responders.add(defaultMode);
+    _responders.add(defaultResponder);
   }
 
   /*
-   * The dispatch method gets called every time a message is received. It is
-   * responsible for finding the correct mode to dispatch a message to and
-   * keeping track of what mode the bot should be in.
+   * The dispatch method gets called by the View every time a message is
+   * received. It is responsible for dispatching a message to a Responder that
+   * can respond to the message. It then relays the response back to the View.
    */
   public String dispatch(String message) {
-    Responder responder;
-
-    // TODO: Find a responder that will respond to this message.
-    responder = _responders.get(_responders.size() - 1);
-
+    Responder responder = this.findResponder(message);
     return responder.respondTo(message);
+  }
+
+  /*
+   * findResponder is given a message and should return the *last* responder in
+   * this Controller's _responders which can handle the message.
+   */
+  public Responder findResponder(String message) {
+    // TODO: 2.1 Implement the correct search logic
+    return _responders.get(_responders.size() - 1);
   }
 
   public void addResponder(Responder responder) {

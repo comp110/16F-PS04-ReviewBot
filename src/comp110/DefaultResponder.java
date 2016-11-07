@@ -2,8 +2,8 @@ package comp110;
 
 public class DefaultResponder implements Responder {
 
-  public boolean willRespondTo(String message) {
-    return true;
+  public boolean canHandle(String message) {
+    return false;
   }
 
   public String respondTo(String message) {
